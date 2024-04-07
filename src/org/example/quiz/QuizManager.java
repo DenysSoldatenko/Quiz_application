@@ -1,25 +1,31 @@
 package org.example.quiz;
 
-import javax.swing.*;
-import java.awt.*;
+import static java.awt.Color.decode;
+import static java.lang.String.valueOf;
+import static java.util.Arrays.asList;
+
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.Timer;
 
-public class QuizController implements ActionListener {
-  private final QuizUI ui;
-  private final Questions questions;
+public class QuizManager implements ActionListener {
+  private final QuizGui ui;
+  private final QuizQuestion quizQuestion;
   private final Timer pause;
   private final Timer timer;
   JButton[] buttons = new JButton[4];
   JLabel[] answers = new JLabel[4];
   private int index;
-  private int correct_answers = 0;
+  private int correctAnswers = 0;
   private int seconds = 10;
 
-  public QuizController(QuizUI ui, Questions questions) {
+  public QuizManager(QuizGui ui, QuizQuestion quizQuestion) {
     this.ui = ui;
-    this.questions = questions;
+    this.quizQuestion = quizQuestion;
     String[] buttonLabels = {"A", "B", "C", "D"};
 
     for (int i = 0; i < buttons.length; i++) {
@@ -32,7 +38,7 @@ public class QuizController implements ActionListener {
       answers[i] = new JLabel();
       answers[i].setBounds(125, 175 + (i * 100), 500, 100);
       answers[i].setBackground(new Color(50, 50, 50));
-      answers[i].setForeground(Color.decode("#D5CAE4"));
+      answers[i].setForeground(decode("#D5CAE4"));
       answers[i].setFont(new Font("Comic Sans MS", Font.PLAIN, 35));
 
       ui.getFrame().add(buttons[i]);
@@ -41,14 +47,16 @@ public class QuizController implements ActionListener {
 
     this.timer = new Timer(1000, e -> {
       seconds--;
-      ui.getSeconds_label().setText(String.valueOf(seconds));
-      if (seconds <= 0) showAnswer();
+      ui.getSecondsLabel().setText(valueOf(seconds));
+      if (seconds <= 0) {
+        showAnswer();
+      }
     });
 
     this.pause = new Timer(1500, e -> {
-      Arrays.asList(answers).forEach(answer -> answer.setForeground(Color.decode("#D5CAE4")));
+      asList(answers).forEach(answer -> answer.setForeground(decode("#D5CAE4")));
       seconds = 10;
-      ui.getSeconds_label().setText(String.valueOf(seconds));
+      ui.getSecondsLabel().setText(valueOf(seconds));
       buttonsEnable(true);
       index++;
       nextQuestion();
@@ -58,13 +66,13 @@ public class QuizController implements ActionListener {
   }
 
   private void nextQuestion() {
-    if (index >= questions.getQuestions().length) {
+    if (index >= quizQuestion.getQuestions().length) {
       showResults();
     } else {
       ui.getTextField().setText("Question " + (index + 1));
-      ui.getTextArea().setText(questions.getQuestions()[index]);
+      ui.getTextArea().setText(quizQuestion.getQuestions()[index]);
       for (int i = 0; i < answers.length; i++) {
-        answers[i].setText(questions.getOptions()[index][i]);
+        answers[i].setText(quizQuestion.getOptions()[index][i]);
       }
       timer.start();
     }
@@ -74,8 +82,10 @@ public class QuizController implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     buttonsEnable(false);
     char selectedAnswer = e.getActionCommand().charAt(0);
-    char correctAnswer = questions.getAnswers()[index];
-    if (selectedAnswer == correctAnswer) correct_answers++;
+    char correctAnswer = quizQuestion.getAnswers()[index];
+    if (selectedAnswer == correctAnswer) {
+      correctAnswers++;
+    }
     showAnswer();
   }
 
@@ -84,10 +94,10 @@ public class QuizController implements ActionListener {
     buttonsEnable(false);
 
     for (int i = 0; i < answers.length; i++) {
-      if (questions.getAnswers()[index] != 'A' + i) {
-        answers[i].setForeground(Color.decode("#ed533b"));
+      if (quizQuestion.getAnswers()[index] != 'A' + i) {
+        answers[i].setForeground(decode("#ed533b"));
       } else {
-        answers[i].setForeground(Color.decode("#7fed3b"));
+        answers[i].setForeground(decode("#7fed3b"));
       }
     }
 
@@ -97,16 +107,16 @@ public class QuizController implements ActionListener {
 
   private void showResults() {
     buttonsEnable(false);
-    int result = (int) ((correct_answers / (double) questions.getQuestions().length) * 100);
+    int result = (int) ((correctAnswers / (double) quizQuestion.getQuestions().length) * 100);
 
     ui.getTextField().setText("RESULTS!");
     ui.getTextArea().setText("");
-    Arrays.asList(answers).forEach(answer -> answer.setText(""));
+    asList(answers).forEach(answer -> answer.setText(""));
 
-    ui.getCorrect_answers_label().setText("(" + correct_answers + "/" + questions.getQuestions().length + ")");
+    ui.getCorrectAnswersLabel().setText("(" + correctAnswers + "/" + quizQuestion.getQuestions().length + ")");
     ui.getPercentage().setText(result + "%");
 
-    ui.getFrame().add(ui.getCorrect_answers_label());
+    ui.getFrame().add(ui.getCorrectAnswersLabel());
     ui.getFrame().add(ui.getPercentage());
   }
 

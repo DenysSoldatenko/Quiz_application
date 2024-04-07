@@ -1,8 +1,8 @@
 package org.example.quiz;
 
-public class Main {
+public class ApplicationLauncher {
 
   public static void main(String[] args) {
-    new QuizUI();
+    new QuizGui();
   }
 }

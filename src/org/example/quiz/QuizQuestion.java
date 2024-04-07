@@ -1,6 +1,6 @@
 package org.example.quiz;
 
-public class Questions {
+public class QuizQuestion {
 
   String[] questions = {
     "During the 10th and 11th centuries, Ukraine was the centre of powerful and prestigious state in Europe. What was it called at the time?",
@@ -71,8 +71,7 @@ public class Questions {
     'C',
   };
 
-  public Questions() {
-  }
+  public QuizQuestion() { }
 
   public String[] getQuestions() {
     return questions;
