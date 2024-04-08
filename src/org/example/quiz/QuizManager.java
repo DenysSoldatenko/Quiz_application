@@ -1,6 +1,8 @@
 package org.example.quiz;
 
 import static java.awt.Color.decode;
+import static java.awt.Font.BOLD;
+import static java.awt.Font.PLAIN;
 import static java.lang.String.valueOf;
 import static java.util.Arrays.asList;
 
@@ -17,11 +19,13 @@ public class QuizManager implements ActionListener {
   private final QuizQuestion quizQuestion;
   private final Timer pause;
   private final Timer timer;
-  JButton[] buttons = new JButton[4];
-  JLabel[] answers = new JLabel[4];
+
   private int index;
   private int correctAnswers = 0;
   private int seconds = 10;
+
+  JButton[] buttons = new JButton[4];
+  JLabel[] answers = new JLabel[4];
 
   public QuizManager(QuizGui ui, QuizQuestion quizQuestion) {
     this.ui = ui;
@@ -31,7 +35,7 @@ public class QuizManager implements ActionListener {
     for (int i = 0; i < buttons.length; i++) {
       buttons[i] = new JButton(buttonLabels[i]);
       buttons[i].setBounds(0, 175 + (i * 100), 100, 100);
-      buttons[i].setFont(new Font("Comic Sans MS", Font.BOLD, 35));
+      buttons[i].setFont(new Font("Comic Sans MS", BOLD, 35));
       buttons[i].setFocusable(false);
       buttons[i].addActionListener(this);
 
@@ -39,7 +43,7 @@ public class QuizManager implements ActionListener {
       answers[i].setBounds(125, 175 + (i * 100), 500, 100);
       answers[i].setBackground(new Color(50, 50, 50));
       answers[i].setForeground(decode("#D5CAE4"));
-      answers[i].setFont(new Font("Comic Sans MS", Font.PLAIN, 35));
+      answers[i].setFont(new Font("Comic Sans MS", PLAIN, 35));
 
       ui.getFrame().add(buttons[i]);
       ui.getFrame().add(answers[i]);

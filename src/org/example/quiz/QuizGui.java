@@ -19,10 +19,13 @@ public class QuizGui {
   JFrame frame = new JFrame();
   QuizManager quizManager;
   QuizQuestion quizQuestion = new QuizQuestion();
+
   JTextField textField = new JTextField();
   JTextArea textArea = new JTextArea();
+
   JLabel timerLabel = new JLabel();
   JLabel secondsLabel = new JLabel();
+
   JTextField correctAnswersLabel = new JTextField();
   JTextField percentage = new JTextField();
 
