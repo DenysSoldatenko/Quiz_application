@@ -1,5 +1,9 @@
 package org.example.quiz;
 
+/**
+ * The QuizQuestion class contains the questions, options, and correct answers for the quiz.
+ * It provides methods to retrieve the questions, options, and answers.
+ */
 public class QuizQuestion {
 
   String[] questions = {

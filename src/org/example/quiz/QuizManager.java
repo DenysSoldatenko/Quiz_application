@@ -14,6 +14,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
+/**
+ * The QuizManager class handles the logic for managing the quiz game. It manages the
+ * quiz questions, user answers, and timing for the quiz. It also updates the GUI based
+ * on user interactions and the state of the quiz.
+ */
 public class QuizManager implements ActionListener {
   private final QuizGui ui;
   private final QuizQuestion quizQuestion;
@@ -27,6 +32,13 @@ public class QuizManager implements ActionListener {
   JButton[] buttons = new JButton[4];
   JLabel[] answers = new JLabel[4];
 
+  /**
+   * Constructs a new QuizManager instance, initializing the quiz UI and setting up
+   * the timers for handling quiz timing.
+   *
+   * @param ui the QuizGui instance used for updating the UI
+   * @param quizQuestion the QuizQuestion instance containing questions and answers
+   */
   public QuizManager(QuizGui ui, QuizQuestion quizQuestion) {
     this.ui = ui;
     this.quizQuestion = quizQuestion;

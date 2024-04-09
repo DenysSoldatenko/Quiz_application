@@ -2,6 +2,7 @@ package org.example.quiz;
 
 import static java.awt.Color.decode;
 import static java.awt.Font.BOLD;
+import static java.awt.Font.PLAIN;
 import static java.lang.String.valueOf;
 import static javax.swing.BorderFactory.createBevelBorder;
 import static javax.swing.SwingConstants.CENTER;
@@ -15,6 +16,11 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * The QuizGui class represents the graphical user interface for the trivia quiz application.
+ * It includes components such as text fields, labels, and a text area to display quiz questions
+ * and results.
+ */
 public class QuizGui {
   JFrame frame = new JFrame();
   QuizManager quizManager;
@@ -29,6 +35,10 @@ public class QuizGui {
   JTextField correctAnswersLabel = new JTextField();
   JTextField percentage = new JTextField();
 
+  /**
+   * Constructs a new QuizGui instance, initializing the GUI components and setting up the
+   * quiz manager.
+   */
   public QuizGui() {
     frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
     frame.setSize(685, 750);
@@ -58,7 +68,7 @@ public class QuizGui {
     timerLabel.setBounds(565, 590, 100, 25);
     timerLabel.setBackground(new Color(50, 50, 50));
     timerLabel.setForeground(decode("#E59462"));
-    timerLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+    timerLabel.setFont(new Font("Comic Sans MS", PLAIN, 16));
     timerLabel.setHorizontalAlignment(CENTER);
     timerLabel.setText("Timer");
 
