@@ -20,7 +20,7 @@ import javax.swing.Timer;
  * on user interactions and the state of the quiz.
  */
 public class QuizManager implements ActionListener {
-  private final QuizGui ui;
+  private final QuizGui quizGui;
   private final QuizQuestion quizQuestion;
   private final Timer pause;
   private final Timer timer;
@@ -29,18 +29,18 @@ public class QuizManager implements ActionListener {
   private int correctAnswers = 0;
   private int seconds = 10;
 
-  JButton[] buttons = new JButton[4];
-  JLabel[] answers = new JLabel[4];
+  private final JButton[] buttons = new JButton[4];
+  private final JLabel[] answers = new JLabel[4];
 
   /**
    * Constructs a new QuizManager instance, initializing the quiz UI and setting up
    * the timers for handling quiz timing.
    *
-   * @param ui the QuizGui instance used for updating the UI
+   * @param quizGui the QuizGui instance used for updating the UI
    * @param quizQuestion the QuizQuestion instance containing questions and answers
    */
-  public QuizManager(QuizGui ui, QuizQuestion quizQuestion) {
-    this.ui = ui;
+  public QuizManager(QuizGui quizGui, QuizQuestion quizQuestion) {
+    this.quizGui = quizGui;
     this.quizQuestion = quizQuestion;
     String[] buttonLabels = {"A", "B", "C", "D"};
 
@@ -57,13 +57,13 @@ public class QuizManager implements ActionListener {
       answers[i].setForeground(decode("#D5CAE4"));
       answers[i].setFont(new Font("Comic Sans MS", PLAIN, 35));
 
-      ui.getFrame().add(buttons[i]);
-      ui.getFrame().add(answers[i]);
+      quizGui.getFrame().add(buttons[i]);
+      quizGui.getFrame().add(answers[i]);
     }
 
     this.timer = new Timer(1000, e -> {
       seconds--;
-      ui.getSecondsLabel().setText(valueOf(seconds));
+      quizGui.getSecondsLabel().setText(valueOf(seconds));
       if (seconds <= 0) {
         showAnswer();
       }
@@ -72,7 +72,7 @@ public class QuizManager implements ActionListener {
     this.pause = new Timer(1500, e -> {
       asList(answers).forEach(answer -> answer.setForeground(decode("#D5CAE4")));
       seconds = 10;
-      ui.getSecondsLabel().setText(valueOf(seconds));
+      quizGui.getSecondsLabel().setText(valueOf(seconds));
       buttonsEnable(true);
       index++;
       nextQuestion();
@@ -85,8 +85,8 @@ public class QuizManager implements ActionListener {
     if (index >= quizQuestion.getQuestions().length) {
       showResults();
     } else {
-      ui.getTextField().setText("Question " + (index + 1));
-      ui.getTextArea().setText(quizQuestion.getQuestions()[index]);
+      quizGui.getTextField().setText("Question " + (index + 1));
+      quizGui.getTextArea().setText(quizQuestion.getQuestions()[index]);
       for (int i = 0; i < answers.length; i++) {
         answers[i].setText(quizQuestion.getOptions()[index][i]);
       }
@@ -125,15 +125,15 @@ public class QuizManager implements ActionListener {
     buttonsEnable(false);
     int result = (int) ((correctAnswers / (double) quizQuestion.getQuestions().length) * 100);
 
-    ui.getTextField().setText("RESULTS!");
-    ui.getTextArea().setText("");
+    quizGui.getTextField().setText("RESULTS!");
+    quizGui.getTextArea().setText("");
     asList(answers).forEach(answer -> answer.setText(""));
 
-    ui.getCorrectAnswersLabel().setText("(" + correctAnswers + "/" + quizQuestion.getQuestions().length + ")");
-    ui.getPercentage().setText(result + "%");
+    quizGui.getCorrectAnswersLabel().setText("(" + correctAnswers + "/" + quizQuestion.getQuestions().length + ")");
+    quizGui.getPercentage().setText(result + "%");
 
-    ui.getFrame().add(ui.getCorrectAnswersLabel());
-    ui.getFrame().add(ui.getPercentage());
+    quizGui.getFrame().add(quizGui.getCorrectAnswersLabel());
+    quizGui.getFrame().add(quizGui.getPercentage());
   }
 
   public void buttonsEnable(boolean bool) {

@@ -22,18 +22,18 @@ import javax.swing.JTextField;
  * and results.
  */
 public class QuizGui {
-  JFrame frame = new JFrame();
-  QuizManager quizManager;
-  QuizQuestion quizQuestion = new QuizQuestion();
+  private final JFrame frame = new JFrame();
+  private final QuizManager quizManager;
+  private final QuizQuestion quizQuestion = new QuizQuestion();
 
-  JTextField textField = new JTextField();
-  JTextArea textArea = new JTextArea();
+  private final JTextField textField = new JTextField();
+  private final JTextArea textArea = new JTextArea();
 
-  JLabel timerLabel = new JLabel();
-  JLabel secondsLabel = new JLabel();
+  private final JLabel timerLabel = new JLabel();
+  private final JLabel secondsLabel = new JLabel();
 
-  JTextField correctAnswersLabel = new JTextField();
-  JTextField percentage = new JTextField();
+  private final JTextField correctAnswersLabel = new JTextField();
+  private final JTextField percentage = new JTextField();
 
   /**
    * Constructs a new QuizGui instance, initializing the GUI components and setting up the
